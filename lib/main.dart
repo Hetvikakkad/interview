@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:interview/provider/userProvider.dart';
+import 'package:interview/screens/UserDataScreen.dart';
 import 'package:interview/services/Sqlitehelper.dart';
+import 'package:provider/provider.dart';
+
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+    WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -321,6 +330,18 @@ class _HomePageState extends State<HomePage> {
         title: const Text(
           'Employee SQLite CRUD',
         ),
+        actions: [
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => UserDataScreen(),));
+              },
+              child: Padding(
+                  padding: EdgeInsetsGeometry.all(8),
+                child: Icon(Icons.api_outlined,weight: 18,size: 22,),
+              )
+          )
+        ],
       ),
 
       body: _isLoading
